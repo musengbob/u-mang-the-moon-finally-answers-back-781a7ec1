@@ -1,8 +1,16 @@
 import { mkdirSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 
-const ENTRY =
-  "Four billion years of wishes, howls, and 2 a.m. promises \u2014 and not one of you has ever once asked how I'm doing.";
+function buildEntryLine(): string {
+  return "Four billion years of wishes, howls, and 2 a.m. promises \u2014 and not one of you has ever once asked how I'm doing.";
+}
+
+const ENTRY = buildEntryLine();
+
+// Kit gate (RULES.txt): entry must be UTF-8 text of 1–240 characters, not only whitespace.
+if (ENTRY.length < 1 || ENTRY.length > 240 || ENTRY.trim().length === 0) {
+  throw new Error("entry fails the 1–240 character gate");
+}
 
 function resolveOutputPath(): string {
   const dir =
